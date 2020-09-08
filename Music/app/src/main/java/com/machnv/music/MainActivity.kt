@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.machnv.control.IControlMusicInterface
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(), SongAdapter.ItemClickListener {
 
@@ -44,7 +45,9 @@ class MainActivity : AppCompatActivity(), SongAdapter.ItemClickListener {
             text?.let {
                 Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
             }
-            bindService(serviceIntent, serviceForegroundConnection, Context.BIND_AUTO_CREATE)
+            val song = controlMusicService?.sendDate(currentSong, Random(50).nextInt().toString())
+            Toast.makeText(this, "Song: ${song?.name} \t ${song?.singer}", Toast.LENGTH_SHORT).show()
+            //bindService(serviceIntent, serviceForegroundConnection, Context.BIND_AUTO_CREATE)
         }
 
         btnNext.setOnClickListener {
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity(), SongAdapter.ItemClickListener {
         startForegroundService(serviceIntent)
     }
 
-    private val serviceForegroundConnection = object : ServiceConnection{
+    /*private val serviceForegroundConnection = object : ServiceConnection{
         override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
 
         }
@@ -73,16 +76,11 @@ class MainActivity : AppCompatActivity(), SongAdapter.ItemClickListener {
 
         }
 
-    }
+    }*/
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-//            Toast.makeText(this@MainActivity, "Client Connect Success", Toast.LENGTH_SHORT).show()
             controlMusicService = IControlMusicInterface.Stub.asInterface(p1)
-            if (p1 != null) {
-                isConnected = true
-                controlMusicService?.playSong(currentSong)
-            }
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
