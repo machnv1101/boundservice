@@ -9,5 +9,5 @@ interface IControlMusicInterface {
 
     void prev(String name);
 
-    Song sendDate(String name, String singer);
+    Song createSong(String name, String singer);
 }

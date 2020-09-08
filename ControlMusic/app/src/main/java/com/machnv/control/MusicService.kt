@@ -26,7 +26,7 @@ class MusicService: Service() {
             Log.d("TESTING ---->", "Click Prev $name")
         }
 
-        override fun sendDate(name: String?, singer: String?): Song {
+        override fun createSong(name: String?, singer: String?): Song {
             return Song(name, singer)
         }
 

@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), SongAdapter.ItemClickListener {
             text?.let {
                 Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
             }
-            val song = controlMusicService?.sendDate(currentSong, Random(50).nextInt().toString())
+            val song = controlMusicService?.createSong(currentSong, Random(50).nextInt().toString())
             Toast.makeText(this, "Song: ${song?.name} \t ${song?.singer}", Toast.LENGTH_SHORT).show()
             //bindService(serviceIntent, serviceForegroundConnection, Context.BIND_AUTO_CREATE)
         }
